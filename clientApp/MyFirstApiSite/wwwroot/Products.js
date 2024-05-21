@@ -11,18 +11,20 @@ const addToCart = (product) => {
         document.getElementById("ItemsCountText").innerHTML = 1
     }
     else {
+        let counter = 0;
+        basket.forEach(obj => { counter += obj.quantity })
         const ind = basket.findIndex(p => p.product.productId == product.productId)
         if (ind == -1) {
             const tmp = [...basket, { product: product, quantity: 1 }]
             sessionStorage.setItem("basket", JSON.stringify(tmp));
             const count = document.getElementById("ItemsCountText")
-            count.innerHTML = basket.length + 1
+            count.innerHTML = counter + 1;
         }
         else {
-
+            const count = document.getElementById("ItemsCountText");
+            count.innerHTML = Number(count.innerHTML) + 1;
             basket[ind].quantity += 1;
             sessionStorage.setItem("basket", JSON.stringify(basket));
-
         }
 
     }
@@ -90,8 +92,10 @@ const importProducts = async (url) => {
 window.addEventListener("load", () => {
     const range=importProducts(undefined)
     let basket = sessionStorage.getItem("basket")
+    const count = document.getElementById("ItemsCountText")
+    let counter = 0;
     if (basket) {
-        const count = document.getElementById("ItemsCountText")
-        count.innerHTML = JSON.parse(basket).length + 1
+        basket.forEach(obj => { counter += obj.quantity })
+        count.innerHTML = counter
     } 
 });

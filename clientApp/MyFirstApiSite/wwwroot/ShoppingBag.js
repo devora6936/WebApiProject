@@ -18,11 +18,12 @@ const drawBasket = () => {
         let basket = JSON.parse(sessionStorage.getItem("basket"));
         const template = document.getElementById('temp-row');
         const sum = document.getElementById("totalAmount")
-        var tmp=0
+    var tmp = 0
+    let counter = 0
     basket.forEach(obj => {
             tmp += (obj.product.price * obj.quantity)
             const row = template.content.cloneNode(true);
-
+            counter += obj.quantity
             row.querySelector('.image').style.backgroundImage = `url('${obj.product.imageUrl}')`;
             row.querySelector('.itemName').textContent = obj.product.productName;
             row.querySelector('.itemNumber').textContent = obj.product.productNumber;
@@ -30,11 +31,13 @@ const drawBasket = () => {
             row.querySelector('.amount').textContent = obj.quantity;
             row.querySelector('.DeleteButton').addEventListener("click", () => { removeFromBasket(obj) })
             document.getElementById("bodyOfTable").appendChild(row);
-        });
+    });
+ 
+    const amount = document.getElementById("itemCount")
+    amount.innerHTML = counter
 
-        const amount = document.getElementById("itemCount")
-        amount.innerHTML = basket.length
-        sum.innerHTML=tmp.toFixed(2)
+
+    sum.innerHTML=tmp.toFixed(2)
 }
 
 
