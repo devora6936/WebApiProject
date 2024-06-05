@@ -1,155 +1,109 @@
-﻿html, body {
+﻿
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #2a452c;
     direction: rtl;
+    text-align: center;
     margin: 0;
     padding: 0;
 }
 
+h1, h3 {
+    color: #2a452c;
+}
+
 .cart {
-    width: 960px;
-    margin: 0 auto;
-}
-th {
-    padding: 9px 11px;
-    text-align: right;
-    border-top: 1px solid #C7C5C5;
-    border-bottom: 1px solid #C7C5C5;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 6px 0px;
-    font-family: 'azo-sans', sans-serif;
-    text-transform: uppercase;
-}
- td.imageColumn {
-    width: 66px;
+    width: 80%;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-th.itemsColumn,td.imageColumn {
-    padding-right: 10px;
-}
-
-td {
-    padding: 15px;
-    padding-right: 0;
-    vertical-align: top;
-    border-bottom: 1px solid #C7C5C5;
-}
-
-
-.itemName, .subItemName {
-    font-family: 'azo-sans', sans-serif;
-    font-weight: 400;
-    margin-bottom: 2px;
-    font-size: 14px;
-    line-height: 100%;
-}
-
-
-.availabilityColumn {
-    width: 205px;
-    min-width: 205px;
-    max-width: 205px;
-    font-size: 14px;
-    color: #4D8958;
-    font-family: 'azo-sans', sans-serif;
-}
-.imageColumn div {
-    width: 66px;
-    height: 99px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right center;
-}
-
-.delete a.showText {
-    text-indent: 0;
-    width: 90px;
-    padding-left: 10px;
-    background-image: url(/icn-remove.png);
-    height: 24px;
-    background-position: left -3px;
-    font-size: 11px !important;
-    line-height: 15px;
-    position:relative;
-}
-
-.delete a {
-    display: block;
-    background-repeat: no-repeat;
-    text-decoration: none;
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    color:black;
-}
-
-.price {
-    font-weight: 500;
-    font-size: 16px;
-    margin-bottom: 2px;
-    font-family: 'azo-sans', sans-serif;
-    font-weight: 600 !important;
+p {
+    color: black;
 }
 
 #title {
-    margin: 8px 0 12px;
-    padding-left: 15px;
+    margin-bottom: 20px;
 }
 
-    #title h1 {
-        margin: 15px 0 2px 0;
-        font-family: 'azo-sans', sans-serif;
-        font-size: 18px;
-        font-weight: 300;
-        line-height: 100%;
-        float: right;
+.nxbtn, .shopmore {
+    background-color: #2a452c;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+    .nxbtn:hover, .shopmore:hover {
+        background-color: black;
+        color: white;
     }
 
-h1 {
-    font: 236.36% 'azo-sans',sans-serif;
+.cistGroup {
+    width: 100%;
+    overflow-x: auto;
 }
 
-#title p {
-    font-size: 11px;
-    float: right;
-    padding-right: 10px;
-    padding-top: 19px;
+table.items {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-p, fieldset {
-    margin-bottom: 1em;
+    table.items th, table.items td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #bdad93f5; /* Adds bottom border to each cell */
+        border-left: 1px solid white; /* Adds left border with white color to each cell */
+    }
+
+    table.items th {
+        background-color: #bdad93f5;
+        color: white;
+        border-left: 1px solid white; /* Adds left border with white color to header cells */
+    }
+
+        table.items th:first-child, table.items td:first-child {
+            border-left: none; /* Remove left border for the first column cells */
+        }
+
+    table.items td {
+        background-color: white;
+    }
+
+        table.items td a {
+            color: #2a452c;
+            text-decoration: none;
+        }
+
+            table.items td a:hover {
+                color: #bdad93f5;
+            }
+
+        table.items td .deleteButton {
+            color: red;
+        }
+
+.ClearBoth {
+    clear: both;
 }
 
-a.GoToCheckout.TopLink {
-    margin-top: 10px;
+.imageColumn {
+    width: 120px; /* Adjusted to be slightly larger than the image */
 }
 
-.ShoppingBag a.GoToCheckout {
-    float: left;
-    margin-right: 23px;
-}
-
-.nxbtn.primary {
-    background: #1a6461;
-    font-size: 11px;
-}
-
-.nxbtn.primary, .nxbtn.secondary {
-    padding-top: 6px;
-    padding-bottom: 7px;
-    color: #fff;
-    border: 0;
-    text-transform: uppercase;
-    font-family: 'azo-sans',sans-serif;
-}
-
-.ContentArea a {
-    color: #111;
-    text-decoration: none;
-}
-
-.nxbtn {
-    border-radius: 3px;
-    display: inline-block;
-    padding: 4px 10px;
+.image {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
 }

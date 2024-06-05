@@ -3,27 +3,32 @@
 <head>
     <meta charset="utf-8" />
     <script src="home.js"></script>
-    <title></title>
+    <link rel="stylesheet" href="home.css">
+    <title>עדכון פרטי משתמש</title>
 </head>
 <body>
-    <h1 id="result"></h1>
-    <h3>לעדכון פרטי משתמש</h3>
+    <div class="card">
+        <div class="container">
+            <h1 id="result"></h1>
+            <h3>לעדכון פרטי משתמש</h3>
 
-    <label>שם משתמש</label><br />
-    <input id="email" /><br /><br />
+            <label>שם משתמש</label>
+            <input type="text" id="email" placeholder="שם משתמש">
 
-    <label>סיסמא</label><br />
-    <input id="password" /><br /><br />
+            <label>סיסמא</label>
+            <input type="text" id="password" placeholder="סיסמא">
 
-    <label>שם פרטי</label><br />
-    <input id="firstName" /><br /><br />
+            <label>שם פרטי</label>
+            <input type="text" id="firstName" placeholder="שם פרטי">
 
-    <label>שם משפחה</label><br />
-    <input id="lastName" /><br /><br />
+            <label>שם משפחה</label>
+            <input type="text" id="lastName" placeholder="שם משפחה">
 
-    <button  onclick="update()">עדכון</button>
-    <script>
-     document.getElementById("result").innerHTML = JSON.parse(sessionStorage.getItem("user")).firstName + " שלום  ";
-    </script>
+            <button onclick="update()">עדכון</button>
+            <script>
+                document.getElementById("result").innerHTML = JSON.parse(sessionStorage.getItem("user")).firstName + " שלום ";
+            </script>
+        </div>
+    </div>
 </body>
 </html>

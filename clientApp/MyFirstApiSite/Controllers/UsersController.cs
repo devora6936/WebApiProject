@@ -74,14 +74,14 @@ namespace MyFirstApiSite.Controllers
 
         // PUT api/<AuthController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] User u)
+        public async Task<ActionResult<User>> Put(int id, [FromBody] User u)
         {
             int goodPass = _userService.CheckPass(u.Password);
             if (goodPass<=2)
                 return BadRequest();
             User user =await _userService.UpdateUser(u, id);
             if (user != null)
-                return Ok();
+                return Ok(u);
             return BadRequest();
 
         }

@@ -1,0 +1,64 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    margin: 0;
+    direction: rtl;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    overflow: hidden; /* To avoid any scrollbars */
+}
+
+h1 {
+    color: #2a452c;
+    margin-top: 20px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Full width of screen */
+    margin-top: 20px;
+    height: calc(100vh - 80px); /* Adjust according to the header and desired layout */
+    background: rgba(255, 255, 255, 0.7) url('images/12.jpg') no-repeat center center; /* Brighter and transparent background image */
+    background-size: cover;
+}
+
+.half {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divider {
+    width: 2px;
+    background-color: black;
+    height: 100%;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 20px; /* Uniform size */
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.7); /* Black with transparency */
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1.5em;
+    border: none;
+    min-width: 150px; /* Ensures both buttons are the same minimum width */
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block; /* Ensures text is centered */
+    width:250px;
+}
+
+    .link:hover {
+        background-color: #2a452c;
+        color: white;
+    }

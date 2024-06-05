@@ -1,30 +1,31 @@
+
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <script src="home.js"></script>
+    <link rel="stylesheet" href="home.css">
     <title></title>
 </head>
-<body dir="rtl">
-    <label>שם משתמש</label> <br />
-    <input type="text" id="email" placeholder="שם משתמש" /> <br />
 
-    <label> סיסמא</label> <br />
-    <input type="text" id="password" placeholder="סיסמא" /> <br />
-    <br />
-    <button onclick="login()">התחברות</button> <br />
-    <br />
-    <label>מייל</label> <br />
-    <input type="text" id="regEmail" placeholder="שם משתמש" /> <br />
-    <label> סיסמא</label> <br />
-    <input type="text" id="regPassword" placeholder="סיסמא" /> <br />
-    <progress id="progress" value="0" max="4"> </progress> <br />
-    <button onclick="checkPassword()">בדוק חוזק סיסמא </button><br/><br />
-    <label> שם פרטי</label> <br />
-    <input type="text" id="firstName" placeholder="שם משתמש" /> <br />
-    <label> שם משפחה</label> <br />
-    <input type="text" id="lastName" placeholder="סיסמא" /> <br />
-    <br />
-    <button onclick="register()">משתמש חדש</button>
+<body>
+
+    <div class="card">
+        <div class="container">
+             <h2>כניסת משתמשים</h2>
+            <label>שם משתמש</label>
+            <input type="text" id="email" placeholder="שם משתמש">
+
+            <label> סיסמא</label>
+            <input type="text" id="password" placeholder="סיסמא">
+
+            <button onclick="login()">התחברות</button>
+            <a href="register.html">משתמש חדש</a>
+        </div>
+    </div>
+
 </body>
+
 </html>

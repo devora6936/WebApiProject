@@ -72,32 +72,33 @@
 
 //};
 
-const update = async () => {
-    const putData = {
-        Email: document.getElementById('email').value,
-        Password: document.getElementById('password').value,
-        FirstName: document.getElementById('firstName').value,
-        LastName: document.getElementById('lastName').value
+//const update = async () => {
+//    const putData = {
+//        Email: document.getElementById('email').value,
+//        Password: document.getElementById('password').value,
+//        FirstName: document.getElementById('firstName').value,
+//        LastName: document.getElementById('lastName').value
 
-    };
-    const Id = JSON.parse(sessionStorage.getItem('user')).userId
+//    };
+//    const Id = JSON.parse(sessionStorage.getItem('user')).userId
 
-    const responsePut = await fetch('api/users/'+ Id, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(putData)
-    });
+//    const responsePut = await fetch('api/users/'+ Id, {
+//        method: 'PUT',
+//        headers: {
+//            'Content-Type': 'application/json'
+//        },
+//        body: JSON.stringify(putData)
+//    });
+//    const res = await responsePut.json();
 
-    const res = await responsePut.json();
+//    if (!responsePut.ok)
+//        alert("fiels are not valid");
+//    else {
+//        alert("user update")
+//        window.location.href="home.html"
+//    }
 
-    if (!responsePut.ok)
-        alert("fiels are not valid");
-    else
-        alert("user update")
-
-};
+//};
 
 const getInputValueById = (id) => document.getElementById(id).value;
 const showAlert = (message) => alert(message);
@@ -156,32 +157,33 @@ const register = async () => {
     try {
         await fetchApi('api/users', 'POST', postData);
         showAlert("user added");
+        window.location.replace("home.html")
     } catch (error) {
         showAlert("fields are not valid");
     }
 };
 
-//const update = async () => {
-//    const putData = {
-//        Email: getInputValueById('email'),
-//        Password: getInputValueById('password'),
-//        FirstName: getInputValueById('firstName'),
-//        LastName: getInputValueById('lastName')
-//    };
-//    try {
-//        const user = JSON.parse(sessionStorage.getItem('user'));
-//        if (!user || !user.userId) {
-//            showAlert('User not found in session');
-//            return;
-//        }
+const update = async () => {
+    const putData = {
+        Email: getInputValueById('email'),
+        Password: getInputValueById('password'),
+        FirstName: getInputValueById('firstName'),
+        LastName: getInputValueById('lastName')
+    };
+    try {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        if (!user || !user.userId) {
+            showAlert('User not found in session');
+            return;
+        }
 
-//        const userId = user.userId;
-//        const url = `api/users/${userId}`;
+        const userId = user.userId;
+        const url = `api/users/${userId}`;
 
-//        const res = await fetchApi(url, 'PUT', putData);
-//        showAlert("user updated");
-//        console.log('Update response:', res);
-//    } catch (error) {
-//        showAlert("fields are not valid");
-//    }
-//};
+        const res = await fetchApi(url, 'PUT', putData);
+        showAlert("user updated");
+        console.log('Update response:', res);
+    } catch (error) {
+        showAlert("fields are not valid");
+    }
+};
