@@ -1,101 +1,78 @@
 var arr =[];
 
-
-
-
 const addToCart = (product) => {
-    
-    let basket = JSON.parse(sessionStorage.getItem("basket"))
-    if (!basket) {
-        sessionStorage.setItem("basket", JSON.stringify([{ product: product, quantity: 1 }]))
-        document.getElementById("ItemsCountText").innerHTML = 1
-    }
-    else {
-        let counter = 0;
-        basket.forEach(obj => { counter += obj.quantity })
-        const ind = basket.findIndex(p => p.product.productId == product.productId)
-        if (ind == -1) {
-            const tmp = [...basket, { product: product, quantity: 1 }]
-            sessionStorage.setItem("basket", JSON.stringify(tmp));
-            const count = document.getElementById("ItemsCountText")
-            count.innerHTML = counter + 1;
-        }
-        else {
-            const count = document.getElementById("ItemsCountText");
-            count.innerHTML = Number(count.innerHTML) + 1;
-            basket[ind].quantity += 1;
-            sessionStorage.setItem("basket", JSON.stringify(basket));
-        }
+    let basket = JSON.parse(sessionStorage.getItem("basket")) || [];
+    const productIndex = basket.findIndex(p => p.product.productId === product.productId);
 
+    if (productIndex === -1) {
+        basket.push({ product: product, quantity: 1 });
+    } else {
+        basket[productIndex].quantity += 1;
     }
 
+    sessionStorage.setItem("basket", JSON.stringify(basket));
+    updateCartCount();
+};
 
-}
+const updateCartCount = () => {
+    let basket = JSON.parse(sessionStorage.getItem("basket")) || [];
+    let totalItems = basket.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById("ItemsCountText").innerText = totalItems;
+};
 
- const drawProducts = (data) => {
-    let poductList = document.getElementById("temp-card")
 
-     data.forEach(product => {
+const drawProducts = (data) => {
+    const productList = document.getElementById("temp-card");
+    const productContainer = document.getElementById("PoductList");
 
-        const card = poductList.content.cloneNode(true);
-        card.querySelector('.card').setAttribute("id",product.productId)
+    data.forEach(product => {
+        const card = productList.content.cloneNode(true);
+
+        card.querySelector('.card').setAttribute("id", product.productId);
         card.querySelector('h1').textContent = product.productName;
         card.querySelector('.price').textContent = product.price;
-        //card.querySelector('.description').textContent = product.description;
         card.querySelector('img').src = product.imageUrl;
-         card.querySelector('button').addEventListener("click", () => { addToCart(product) })
-        
-        document.getElementById("PoductList").appendChild(card);
-     });
+        card.querySelector('button').addEventListener("click", () => addToCart(product));
+
+        productContainer.appendChild(card);
+    });
+};
 
 
-}
-
-
-
-const importProducts = async (url) => {
-    if (url == undefined) {
-        url = 'api/products'
-    }
-    const response = await fetch(
-       url, {
+const importProducts = async (url = 'api/products') => {
+    try {
+        const response = await fetch(
+            url, {
             method: 'GET',
-            headers: {
-                'Content-Type' : "application/json"
-            }
+            headers: { 'Content-Type': 'application/json' }
         }
-    )
+        );
 
-    if (!response.ok) {
-        return [];
+        if (!response.ok) {
+            throw new Error('Failed to fetch products');
+        }
+
+        const data = await response.json();
+        drawProducts(data);
+        setPriceRange(data);
+
+    } catch (error) {
+        console.error('Error importing products:', error);
     }
+};
 
-    const data = await response.json();
-    arr = data;
-    drawProducts(data)
+const setPriceRange = (products) => {
+    if (products.length === 0) return;
 
-    if (url == 'api/products') {
-        var min = 100000;
-        var max = 0;
-        data.forEach(product => {
-            if (product.price > max)
-                max = product.price
-            if (product.price < min)
-                min = product.price
-        });
-        document.getElementById("minPrice").value = min
-        document.getElementById("maxPrice").value = max
-    }
-        
-}
+    let minPrice = Math.min(...products.map(product => product.price));
+    let maxPrice = Math.max(...products.map(product => product.price));
+
+    document.getElementById("minPrice").value = minPrice;
+    document.getElementById("maxPrice").value = maxPrice;
+};
+
 
 window.addEventListener("load", () => {
-    const range=importProducts(undefined)
-    let basket = sessionStorage.getItem("basket")
-    const count = document.getElementById("ItemsCountText")
-    let counter = 0;
-    if (basket) {
-        basket.forEach(obj => { counter += obj.quantity })
-        count.innerHTML = counter
-    } 
+    importProducts();
+    updateCartCount();
 });

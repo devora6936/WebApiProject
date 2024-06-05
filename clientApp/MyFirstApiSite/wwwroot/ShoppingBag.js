@@ -1,83 +1,96 @@
 
-const removeFromBasket = (obj) => {
-   
-    let basket = JSON.parse(sessionStorage.getItem("basket"));
-    basket.forEach(item => {
-        if (item.product.productId == obj.product.productId)
-            if (item.quantity > 1)
-                item.quantity -= 1
-            else basket = basket.filter((item) => item.product.productId != obj.product.productId)
-    });
-    sessionStorage.setItem("basket", JSON.stringify(basket))
-    document.getElementById("bodyOfTable").replaceChildren()
-    drawBasket()
 
-}
+
+const removeFromBasket = (obj) => {
+    let basket = JSON.parse(sessionStorage.getItem("basket")) || [];
+
+    basket = basket.map(item => {
+        if (item.product.productId === obj.product.productId) {
+            item.quantity -= 1;
+        }
+        return item;
+    }).filter(item => item.quantity > 0);
+
+    sessionStorage.setItem("basket", JSON.stringify(basket));
+    drawBasket();
+};
 
 const drawBasket = () => {
-        let basket = JSON.parse(sessionStorage.getItem("basket"));
-        const template = document.getElementById('temp-row');
-        const sum = document.getElementById("totalAmount")
-    var tmp = 0
-    let counter = 0
+    const basket = JSON.parse(sessionStorage.getItem("basket")) || [];
+    const template = document.getElementById('temp-row');
+    const bodyOfTable = document.getElementById("bodyOfTable");
+    const totalAmount = document.getElementById("totalAmount");
+    const itemCount = document.getElementById("itemCount");
+
+    bodyOfTable.innerHTML = '';
+
+    let totalSum = 0;
+    let totalItems = 0;
+
     basket.forEach(obj => {
-            tmp += (obj.product.price * obj.quantity)
-            const row = template.content.cloneNode(true);
-            counter += obj.quantity
-            row.querySelector('.image').style.backgroundImage = `url('${obj.product.imageUrl}')`;
-            row.querySelector('.itemName').textContent = obj.product.productName;
-            row.querySelector('.itemNumber').textContent = obj.product.productNumber;
-            row.querySelector('.price').textContent = (obj.product.price * obj.quantity).toFixed(2);
-            row.querySelector('.amount').textContent = obj.quantity;
-            row.querySelector('.DeleteButton').addEventListener("click", () => { removeFromBasket(obj) })
-            document.getElementById("bodyOfTable").appendChild(row);
+        totalSum += obj.product.price * obj.quantity;
+        totalItems += obj.quantity;
+
+        const row = template.content.cloneNode(true);
+        row.querySelector('.image').style.backgroundImage = `url('${obj.product.imageUrl}')`;
+        row.querySelector('.itemName').textContent = obj.product.productName;
+        row.querySelector('.itemNumber').textContent = obj.product.productNumber;
+        row.querySelector('.price').textContent = (obj.product.price * obj.quantity).toFixed(2);
+        row.querySelector('.amount').textContent = obj.quantity;
+        row.querySelector('.DeleteButton').addEventListener("click", () => removeFromBasket(obj));
+
+        bodyOfTable.appendChild(row);
     });
- 
-    const amount = document.getElementById("itemCount")
-    amount.innerHTML = counter
 
-
-    sum.innerHTML=tmp.toFixed(2)
-}
+    itemCount.textContent = totalItems;
+    totalAmount.textContent = totalSum.toFixed(2);
+};
 
 
 const placeOrder = async () => {
+    const basket = JSON.parse(sessionStorage.getItem("basket")) || [];
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
-    let basket = JSON.parse(sessionStorage.getItem("basket"));
-
-    var newArray = []
-
-    basket.forEach((obj) => {
-        newArray.push({ productId: obj.product.productId, quantity: obj.quantity })
-    })
-
-    const data = {
-        OrderDate: new Date(),
-        OrderSum: parseFloat( document.getElementById("totalAmount").innerHTML),
-        UserId: JSON.parse(sessionStorage.getItem("user")).userId,
-        OrderItems: newArray
+    if (!user) {
+        alert('User not found in session');
+        return;
     }
 
+    const orderItems = basket.map(item => ({
+        productId: item.product.productId,
+        quantity: item.quantity
+    }));
+
+    const orderData = {
+        OrderDate: new Date(),
+        OrderSum: parseFloat(document.getElementById("totalAmount").textContent),
+        UserId: user.userId,
+        OrderItems: orderItems
+    };
+
+    try {
         const response = await fetch('api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(orderData)
         });
 
-    if (response.ok) {
-        alert("קניה בוצעה בהצלחה")
-        sessionStorage.removeItem("basket")
-        window.location.href = "Products.html"
+        if (response.ok) {
+            alert("Order placed successfully");
+            sessionStorage.removeItem("basket");
+            window.location.href = "Products.html";
+        } else {
+            alert("Error placing order. Please try again.");
+        }
+    } catch (error) {
+        console.error('Error placing order:', error);
+        alert("Error placing order. Please try again.");
     }
-    else {
-        alert("אין לשנות את המחיר!!!!")
+};
 
-    }
 
-    }
-
-    window.addEventListener("load", () => {
-        drawBasket()
-    });
+window.addEventListener("load", () => {
+    drawBasket();
+});
