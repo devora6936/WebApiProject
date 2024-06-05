@@ -15,8 +15,6 @@ namespace Repositories
         public async Task<User> login(User u)
         {
             return  await _marketContext.Users.Where(user => user.Email == u.Email && user.Password == u.Password).FirstOrDefaultAsync();
-
-       
         }
         public  async Task<User> GetUserById(int id)
         {
@@ -30,16 +28,24 @@ namespace Repositories
             return user;
         }
 
-        public async Task<User> UpdateUser(User u, int id)
-        {
-            User userToUpdate= await _marketContext.Users.FindAsync(id);
-            if (userToUpdate == null)
-                return null;
-            u.UserId = id;
-            _marketContext.Entry(userToUpdate).CurrentValues.SetValues(u);
-            await _marketContext.SaveChangesAsync();  
-            return u;
+        //public async Task<User> UpdateUser(User u, int id)
+        //{
+        //    User userToUpdate= await _marketContext.Users.FindAsync(id);
+        //    if (userToUpdate == null)
+        //        return null;
+        //    u.UserId = id;
+        //    _marketContext.Entry(userToUpdate).CurrentValues.SetValues(u);
+        //    await _marketContext.SaveChangesAsync();  
+        //    return u;
 
+        //}
+
+        public async Task<User> UpdateUser( User u,int id)
+        {
+            u.UserId = id;
+            _marketContext.Users.Update(u);
+            await _marketContext.SaveChangesAsync();
+            return u;
         }
 
     }

@@ -27,8 +27,11 @@ public partial class MarketContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=Market;Trusted_Connection=True;TrustServerCertificate=True");
+    {
+        if(!optionsBuilder.IsConfigured)
+                 optionsBuilder.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=Market;Trusted_Connection=True;TrustServerCertificate=True");
+    }
+        
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,7 +41,7 @@ public partial class MarketContext : DbContext
 
             entity.Property(e => e.CategoryId).HasColumnName("CATEGORY_ID");
             entity.Property(e => e.CategoryName)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("CATEGORY_NAME");
         });
@@ -47,7 +50,7 @@ public partial class MarketContext : DbContext
         {
             entity.Property(e => e.OrderId).HasColumnName("ORDER_ID");
             entity.Property(e => e.OrderDate)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("ORDER_DATE");
             entity.Property(e => e.OrderSum).HasColumnName("ORDER_SUM");
@@ -81,16 +84,16 @@ public partial class MarketContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("PRODUCT_ID");
             entity.Property(e => e.CategoryId).HasColumnName("CATEGORY_ID");
             entity.Property(e => e.Description)
-                .HasMaxLength(50)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("DESCRIPTION");
             entity.Property(e => e.ImageUrl)
-                .HasMaxLength(50)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("IMAGE_URL");
             entity.Property(e => e.Price).HasColumnName("PRICE");
             entity.Property(e => e.ProductName)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("PRODUCT_NAME");
 
@@ -103,23 +106,23 @@ public partial class MarketContext : DbContext
         {
             entity.Property(e => e.UserId).HasColumnName("USER_ID");
             entity.Property(e => e.Email)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("EMAIL");
             entity.Property(e => e.FirstName)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("FIRST_NAME");
             entity.Property(e => e.LastName)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("LAST_NAME");
             entity.Property(e => e.Message)
-                .HasMaxLength(100)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("MESSAGE");
             entity.Property(e => e.Password)
-                .HasMaxLength(10)
+                .HasMaxLength(200)
                 .IsFixedLength()
                 .HasColumnName("PASSWORD");
         });

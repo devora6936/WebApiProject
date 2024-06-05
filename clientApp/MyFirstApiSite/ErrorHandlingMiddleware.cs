@@ -18,6 +18,7 @@ namespace PresidentsApp.Middlewares
         {
             try
             {
+               
                 await _next(httpContext);
             }
             catch(Exception e)
