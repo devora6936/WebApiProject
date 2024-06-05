@@ -123,7 +123,7 @@ The Plant Pots Shop project is a web-based application developed using .NET Core
 
 ## Contact
 
-- For any queries or support, please contact the project manager at [email@example.com].
+- For any queries or support, please contact the project manager at [devora6936@gmail.com].
 
 Thank you for using Plant Pots Shop! We hope this application meets your needs for managing and selling plant pots efficiently and securely.
 
