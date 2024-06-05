@@ -71,6 +71,10 @@ const placeOrder = async () => {
         sessionStorage.removeItem("basket")
         window.location.href = "Products.html"
     }
+    else {
+        alert("אין לשנות את המחיר!!!!")
+
+    }
 
     }
 

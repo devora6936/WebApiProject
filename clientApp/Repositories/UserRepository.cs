@@ -28,17 +28,6 @@ namespace Repositories
             return user;
         }
 
-        //public async Task<User> UpdateUser(User u, int id)
-        //{
-        //    User userToUpdate= await _marketContext.Users.FindAsync(id);
-        //    if (userToUpdate == null)
-        //        return null;
-        //    u.UserId = id;
-        //    _marketContext.Entry(userToUpdate).CurrentValues.SetValues(u);
-        //    await _marketContext.SaveChangesAsync();  
-        //    return u;
-
-        //}
 
         public async Task<User> UpdateUser( User u,int id)
         {

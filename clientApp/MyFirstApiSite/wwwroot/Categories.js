@@ -2,44 +2,70 @@ var arr = [];
 
 var categories = [];
 
-const hadleChange = (event) => {
+
+const handleChange = (event) => {
+    const categoryId = event.target.id;
+
     if (event.currentTarget.checked) {
-        categories.push(event.target.id)
+        addCategory(categoryId);
+    } else {
+        removeCategory(categoryId);
     }
-    else {
-        categories = categories.filter(item => item !== event.target.id);
-    }
-    filterProducts()
+
+    filterProducts();
 }
 
-const filterProducts = ()=>{
-    const minPrice = document.getElementById('minPrice').value
-    const maxPrice = document.getElementById('maxPrice').value
-    const desc = document.getElementById('nameSearch').value
-    let categoriesStr = ''
-    categories.forEach((id) => { categoriesStr += `&categoryIds=${id}`})
-    let url = `api/products?minPrice=${minPrice}&maxPrice=${maxPrice}${categoriesStr}&desc=${desc}`;
-    console.log(url)
+const addCategory = (categoryId) => {
+    if (!categories.includes(categoryId)) {
+        categories.push(categoryId);
+    }
+}
+
+const removeCategory = (categoryId) => {
+    categories = categories.filter(item => item !== categoryId);
+}
+
+const filterProducts = () => {
+    const url = buildProductFilterUrl();
+    console.log(url);
+
+    clearProductList();
+    importProducts(url);
+}
+
+const buildProductFilterUrl = () => {
+    const minPrice = document.getElementById('minPrice').value;
+    const maxPrice = document.getElementById('maxPrice').value;
+    const desc = document.getElementById('nameSearch').value;
+
+    const categoriesStr = categories.map(id => `&categoryIds=${id}`).join('');
+    return `api/products?minPrice=${minPrice}&maxPrice=${maxPrice}${categoriesStr}&desc=${desc}`;
+}
+
+const clearProductList = () => {
     document.getElementById("PoductList").replaceChildren();
-    importProducts(url)
 }
 
 const drawCategories = (data) => {
     console.log(data);
-    let categories = document.getElementById("temp-category");
+    const categoriesTemplate = document.getElementById("temp-category");
 
     data.forEach(category => {
-        const card = categories.content.cloneNode(true);
-        card.querySelector('.cb.checkbox');
-        card.querySelector('.opt').setAttribute("id", category.categoryId);
-        card.querySelector('label .OptionName').textContent = category.categoryName;
-        card.querySelector('.opt').addEventListener("click", hadleChange)
-
+        const card = categoriesTemplate.content.cloneNode(true);
+        setupCategoryCard(card, category);
         document.getElementById("categoryList").appendChild(card);
     });
 }
 
+const setupCategoryCard = (card, category) => {
+    const checkbox = card.querySelector('.cb.checkbox');
+    const categoryIdOpt = card.querySelector('.opt');
+    const optionLabel = card.querySelector('label .OptionName');
 
+    categoryIdOpt.setAttribute("id", category.categoryId);
+    optionLabel.textContent = category.categoryName;
+    categoryIdOpt.addEventListener("click", handleChange);
+}
  const importCategories = async () => {
     const response = await fetch(
         'api/categories'

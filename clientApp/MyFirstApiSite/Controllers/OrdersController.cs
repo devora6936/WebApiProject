@@ -32,7 +32,7 @@ namespace MyFirstApiSite.Controllers
                 OrderDTO orderToReturn = _mapper.Map<Order, OrderDTO> (newOrder);
                 return Ok(orderToReturn);
             }
-            return null;
+            return BadRequest();
         }
 
     }

@@ -42,7 +42,7 @@ const login = async () => {
         alert("שם משתמש או סיסמא אינם תקינים");
     else {
         sessionStorage.setItem("user", JSON.stringify(res));
-        window.location.href = "products.html";
+        window.location.href = "homePage.html";
     }
 };
 

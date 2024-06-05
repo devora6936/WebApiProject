@@ -10,7 +10,7 @@ public partial class Product
 
     public string? ProductName { get; set; }
 
-    public double? Price { get; set; }
+    public double Price { get; set; }
 
     public int? CategoryId { get; set; }
 
