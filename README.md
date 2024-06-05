@@ -54,5 +54,75 @@ The Plant Pots Shop project is a web-based application developed using .NET Core
 
 - **Apply migrations**:
    ```bash
-   dotnet ef migrations add InitialCreate
+    dotnet ef migrations add InitialCreate
    dotnet ef database update
+ 3. **Run the Project**
+
+  ```bash
+     dotnet run
+4. **Swagger Documentation**
+
+- Access the API documentation at `https://localhost:<port>/swagger`.
+
+## Configuration
+
+### Connection Strings
+
+- Located in `appsettings.json`. For security, move sensitive information to user secrets or environment variables.
+
+### Email Notifications
+
+- Configure the email settings in the configuration files to enable real-time error notifications.
+
+## Additional Projects
+
+### Data Entry Project
+
+- A separate project dedicated to data entry tasks is available [here](link-to-data-entry-project).
+
+## Development
+
+### Dependency Injection (DI)
+
+**Advantages**:
+- Promotes loose coupling and increases testability.
+- Simplifies service and object lifetimes.
+
+### DTO Layer
+
+- Designed to avoid circular dependencies and minimize conversion costs using AutoMapper.
+
+### Error Handling
+
+- All exceptions are caught and handled appropriately.
+- Real-time error notifications are sent to the manager via email.
+
+### Monitoring
+
+- Traffic is logged and monitored using a rating table to track usage and performance.
+
+## Testing
+
+### Integration Tests
+
+- Ensure that different parts of the application work together as expected.
+
+### Unit Tests
+
+- Validate individual components for expected behavior.
+
+## Contributing
+
+- Contributions are welcome! Please fork the repository and submit pull requests for any enhancements or bug fixes.
+
+## License
+
+- This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## Contact
+
+- For any queries or support, please contact the project manager at [email@example.com].
+
+Thank you for using Plant Pots Shop! We hope this application meets your needs for managing and selling plant pots efficiently and securely.
+
+
