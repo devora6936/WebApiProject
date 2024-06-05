@@ -80,7 +80,7 @@ The Plant Pots Shop project is a web-based application developed using .NET Core
 
 ### Data Entry Project
 
-- A separate project dedicated to data entry tasks is available [here]([link-to-data-entry-project](https://github.com/devora6936/WebApiProject/tree/master/ManagerApp)).
+- A separate project dedicated to data entry tasks is available [here](https://github.com/devora6936/WebApiProject/tree/master/ManagerApp).
 
 ## Development
 
