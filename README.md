@@ -48,6 +48,7 @@ The Plant Pots Shop project is a web-based application developed using .NET Core
    ```bash
    git clone <repository-url>
    cd plant-pots-shop
+   ```
 2. **Setup the Database**:
 
 - **Update the connection string in `appsettings.json`.**
@@ -56,10 +57,11 @@ The Plant Pots Shop project is a web-based application developed using .NET Core
    ```bash
     dotnet ef migrations add InitialCreate
    dotnet ef database update
- 3. **Run the Project**
-
+   ```
+3. **Run the Project**:
   ```bash
-     dotnet run
+    dotnet run
+  ```
 4. **Swagger Documentation**
 
 - Access the API documentation at `https://localhost:<port>/swagger`.
