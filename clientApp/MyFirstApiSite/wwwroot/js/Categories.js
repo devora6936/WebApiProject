@@ -66,7 +66,8 @@ const setupCategoryCard = (card, category) => {
     optionLabel.textContent = category.categoryName;
     categoryIdOpt.addEventListener("click", handleChange);
 }
- const importCategories = async () => {
+const importCategories = async () => {
+
     const response = await fetch(
         'api/categories'
     )
