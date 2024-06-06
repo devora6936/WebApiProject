@@ -78,7 +78,8 @@ const placeOrder = async () => {
         });
 
         if (response.ok) {
-            alert("Order placed successfully");
+            const order = await response.json();
+            alert(`Order with id: ${order.orderId} placed successfully`);
             sessionStorage.removeItem("basket");
             window.location.href = "Products.html";
         } else {

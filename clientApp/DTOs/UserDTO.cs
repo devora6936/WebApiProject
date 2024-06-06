@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Entities;
 
-public partial class User
+public partial class UserDTO
 {
     public int UserId { get; set; }
     [EmailAddress]
@@ -20,6 +20,4 @@ public partial class User
     public string? LastName { get; set; }
 
     public string? Message { get; set; }
-
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

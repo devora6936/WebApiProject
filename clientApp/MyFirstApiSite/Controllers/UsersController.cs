@@ -22,32 +22,31 @@ namespace MyFirstApiSite.Controllers
             _logger = logger;
         }
         
-        // GET: api/<AuthController>
-        [HttpGet]
-        public async Task<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<AuthController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<UserDTO>> Get(int id)
         {
             User user =await _userService.GetUserById(id);
-            if (user!=null)
-               return Ok(user);
+            if (user != null)
+            {
+                UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+                return Ok(userDTO);
+            }
+               
             return BadRequest();
         }
 
 
         // POST api/<AuthController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] UserDTO user)
         {
             int goodPass = _userService.CheckPass(user.Password);
             if (goodPass<=2)
                 return BadRequest();
-            User newUser =await _userService.AddUser(user);
+            User userFRomDTO = _mapper.Map<UserDTO, User>(user);
+            User newUser =await _userService.AddUser(userFRomDTO);
             return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
 
         }
@@ -56,16 +55,17 @@ namespace MyFirstApiSite.Controllers
         [HttpPost]
 
         [Route("login")]
-        public async Task<ActionResult<User>> login([FromBody] UserLoginDTO u)
+        public async Task<ActionResult<UserDTO>> login([FromBody] UserLoginDTO u)
         {
            
             User user = _mapper.Map<UserLoginDTO, User>(u);
             _logger.LogInformation($"Loggin attemped with user name,{user.Email} and password {user.Password}");
             User newUser =await _userService.login(user);
+            UserDTO userDTO = _mapper.Map<User, UserDTO>(newUser);
+
             if (user != null)
             {
-                return Ok(newUser);
-
+                return Ok(userDTO);
             }
                 
             return Unauthorized();
@@ -74,14 +74,21 @@ namespace MyFirstApiSite.Controllers
 
         // PUT api/<AuthController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> Put(int id, [FromBody] User u)
+        public async Task<ActionResult<UserDTO>> Put(int id, [FromBody] UserDTO u)
         {
             int goodPass = _userService.CheckPass(u.Password);
             if (goodPass<=2)
                 return BadRequest();
-            User user =await _userService.UpdateUser(u, id);
+            User userFRomDTO = _mapper.Map<UserDTO, User >(u);
+
+            User user =await _userService.UpdateUser(userFRomDTO, id);
             if (user != null)
-                return Ok(u);
+            {
+                UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+                return Ok(userDTO);
+
+
+            }
             return BadRequest();
 
         }
@@ -96,10 +103,5 @@ namespace MyFirstApiSite.Controllers
  
         }
 
-        // DELETE api/<AuthController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

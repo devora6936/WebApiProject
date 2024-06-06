@@ -13,6 +13,7 @@ namespace MyFirstApiSite
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<UserLoginDTO, User>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
 
         }
     }

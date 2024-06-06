@@ -23,7 +23,7 @@ namespace MyFirstApiSite.Controllers
         
         // GET: api/<AuthController>
         [HttpGet]
-        public async Task<ActionResult<List<Category>>> Get()
+        public async Task<ActionResult<List<CategoryDTO>>> Get()
         {
             List<Category> categories = await _categoryService.Get();
             

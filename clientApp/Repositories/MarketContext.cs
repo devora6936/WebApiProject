@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Repositories;
 
 public partial class MarketContext : DbContext
 {
+
     public MarketContext()
     {
     }
@@ -28,10 +30,12 @@ public partial class MarketContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if(!optionsBuilder.IsConfigured)
-                 optionsBuilder.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=Market;Trusted_Connection=True;TrustServerCertificate=True");
+        //if(!optionsBuilder.IsConfigured)
+        //         optionsBuilder.UseSqlServer("Data Source=srv2\\PUPILS;Initial Catalog=Market;Trusted_Connection=True;TrustServerCertificate=True");
+        if (!optionsBuilder.IsConfigured)
+                 optionsBuilder.UseSqlServer();
     }
-        
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
